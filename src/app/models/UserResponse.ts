@@ -1,13 +1,13 @@
-export interface SingleUser {
+export interface User {
   id: number,
   email: string,
   name: string,
-  surname: string,
-  password: string,
-  roles: Array<SingleRole>
+  lastName: string,
+  pass: string,
+  permissions: Array<Permission>
 }
 
-export interface SingleRole {
+export interface Permission {
   id: number,
   name: string
 }

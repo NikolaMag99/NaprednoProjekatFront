@@ -1,0 +1,26 @@
+<div>
+  <div class="row">
+    <div class="col-4">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users">
+          <th scope="row">{{ user.id }}</th>
+          <td>{{ user.name + " " + user.lastName}}</td>
+          <td>
+            <a >{{user.email}}</a>
+          </td>
+          <td ><button [disabled]="canDelete" class="btn btn-primary"  (click)="deleteUser(user.id)">Delete</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

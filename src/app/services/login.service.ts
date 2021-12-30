@@ -15,9 +15,10 @@ export class LoginService {
   }
 
   login(username: string, password: string): Observable<LoginResponse> {
-    return this.httpClient.post<LoginResponse>(`${this.apiUrl}`, {
-      username: username,
-      password: password
+    let endpoint = `${this.apiUrl}`;
+    return this.httpClient.post<LoginResponse>(endpoint, {
+      "username": username,
+      "password": password
     });
   }
 

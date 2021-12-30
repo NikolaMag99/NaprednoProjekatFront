@@ -1,3 +1,3 @@
 export interface LoginResponse {
-  jwt: String
+  jwt: string
 }

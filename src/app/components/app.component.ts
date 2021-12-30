@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AppRoutingModule} from "../app-routing.module";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'domaci3-front';
+  noToken: boolean;
+  constructor(private appRoutingModule: AppRoutingModule) {
+    this.noToken = appRoutingModule.login
+  }
 }

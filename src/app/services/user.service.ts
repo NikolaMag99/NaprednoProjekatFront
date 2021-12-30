@@ -2,80 +2,68 @@ import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {SingleRole, SingleUser} from "../models/UserResponse";
+import {Permission, User} from "../models/UserResponse";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private readonly apiUrl = environment.urlApi
+  apiUrl = environment.urlApi
 
   constructor(private httpClient: HttpClient) {
   }
 
-  saveUser(name: String, surname: String, email: String): Observable<SingleUser> {
+  saveUser(name: string, lastName: string, email: string, pass: string, permissions: Permission[]): Observable<User> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem("token")}`
     });
-    return this.httpClient.post<SingleUser>(`${this.apiUrl + "users/new"}`, {
-      name: name,
-      surname: surname,
-      email: email
+    return this.httpClient.post<User>(`${this.apiUrl + "/create"}`, {
+      "name": name,
+      "lastName": lastName,
+      "email": email,
+      "pass": pass,
+      "permissions": permissions
     }, {
       headers: httpHeaders
     })
   }
 
-  getRoles(id: number): Observable<Array<SingleRole>> {
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    });
-    return this.httpClient.get<Array<SingleRole>>(`${this.apiUrl + `users/all-role/${id}`}`, {headers: httpHeaders})
-  }
 
-  updateUser(id: number, name: String, surname: String, email: String): Observable<SingleUser> {
+  updateUser(id: number, name: string, lastName: string, email: string, pass: string, permissions: Permission[]): Observable<User> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem("token")}`
     });
-    return this.httpClient.put<SingleUser>(`${this.apiUrl + "users"}`, {
-      id: id,
-      name: name,
-      surname: surname,
-      email: email
+    return this.httpClient.put<User>(`${this.apiUrl + "/"}`, {
+      "name": name,
+      "lastName": lastName,
+      "email": email,
+      "pass": pass,
+      "permissions": permissions
     }, {
       headers: httpHeaders
     })
   }
 
-  findUser(id: number): Observable<SingleUser> {
+  findUser(username: string): Observable<User> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem("token")}`
     });
-    let params = new HttpParams();
-    params = params.append('userId', id);
-    return this.httpClient.get<SingleUser>(`${this.apiUrl + `users/?`}`, {headers: httpHeaders, params: params})
+    return this.httpClient.get<User>(`${this.apiUrl + `/myself`}`, {headers: httpHeaders})
   }
 
   deleteUser(id: number) {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem("token")}`
     });
-    return this.httpClient.delete<Object>(`${this.apiUrl + `users/${id}`}`, {headers: httpHeaders})
+    return this.httpClient.delete<Object>(`${this.apiUrl + `/delete/${id}`}`, {headers: httpHeaders})
   }
 
-  fetchAllUser(): Observable<Array<SingleUser>> {
+  getAllUsers(): Observable<Array<User>> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem("token")}`
     });
-    return this.httpClient.get<Array<SingleUser>>(`${this.apiUrl + "users/all"}`, {headers: httpHeaders})
-  }
-
-  fetchAllRole(): Observable<Array<SingleRole>> {
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    });
-    return this.httpClient.get<Array<SingleRole>>(`${this.apiUrl + "roles/all"}`, {headers: httpHeaders})
+    return this.httpClient.get<Array<User>>(`${this.apiUrl + "/all"}`, {headers: httpHeaders})
   }
 
 }
