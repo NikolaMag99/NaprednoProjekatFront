@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Permission, User} from "../models/UserResponse";
+import {User} from "../model";
 
 @Injectable({
   providedIn: 'root'
@@ -14,36 +14,37 @@ export class UserService {
   constructor(private httpClient: HttpClient) {
   }
 
-  saveUser(name: string, lastName: string, email: string, pass: string, permissions: Permission[]): Observable<User> {
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    });
-    return this.httpClient.post<User>(`${this.apiUrl + "/create"}`, {
-      "name": name,
-      "lastName": lastName,
-      "email": email,
-      "pass": pass,
-      "permissions": permissions
-    }, {
-      headers: httpHeaders
-    })
-  }
-
-
-  updateUser(id: number, name: string, lastName: string, email: string, pass: string, permissions: Permission[]): Observable<User> {
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    });
-    return this.httpClient.put<User>(`${this.apiUrl + "/"}`, {
-      "name": name,
-      "lastName": lastName,
-      "email": email,
-      "pass": pass,
-      "permissions": permissions
-    }, {
-      headers: httpHeaders
-    })
-  }
+  //
+  // saveUser(name: string, lastName: string, email: string, pass: string, permissions: Permission[]): Observable<User> {
+  //   const httpHeaders: HttpHeaders = new HttpHeaders({
+  //     Authorization: `Bearer ${localStorage.getItem("token")}`
+  //   });
+  //   return this.httpClient.post<User>(`${this.apiUrl + "/create"}`, {
+  //     "name": name,
+  //     "lastName": lastName,
+  //     "email": email,
+  //     "pass": pass,
+  //     "permissions": permissions
+  //   }, {
+  //     headers: httpHeaders
+  //   })
+  // }
+  //
+  //
+  // updateUser(id: number, name: string, lastName: string, email: string, pass: string, permissions: Permission[]): Observable<User> {
+  //   const httpHeaders: HttpHeaders = new HttpHeaders({
+  //     Authorization: `Bearer ${localStorage.getItem("token")}`
+  //   });
+  //   return this.httpClient.put<User>(`${this.apiUrl + "/"}`, {
+  //     "name": name,
+  //     "lastName": lastName,
+  //     "email": email,
+  //     "pass": pass,
+  //     "permissions": permissions
+  //   }, {
+  //     headers: httpHeaders
+  //   })
+  // }
 
   findUser(username: string): Observable<User> {
     const httpHeaders: HttpHeaders = new HttpHeaders({

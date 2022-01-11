@@ -3,6 +3,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "./auth.guard";
 import {LoginComponent} from "./components/login/login.component";
 import {AllUsersComponent} from "./components/all-users/all-users.component";
+import {UpdateUserComponent} from "./components/update-user/update-user.component";
+import {SaveUserComponent} from "./components/save-user/save-user.component";
+import {AllMachinesComponent} from "./components/all-machines/all-machines.component";
+import {CreateMachinesComponent} from "./components/create-machines/create-machines.component";
 
 const routes: Routes = [
   {
@@ -12,6 +16,26 @@ const routes: Routes = [
   {
     path: "all-users",
     component: AllUsersComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "save-user",
+    component: SaveUserComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "users/:id",
+    component: UpdateUserComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "all-machines",
+    component: AllMachinesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "add-machine",
+    component: CreateMachinesComponent,
     canActivate: [AuthGuard]
   },
 ];

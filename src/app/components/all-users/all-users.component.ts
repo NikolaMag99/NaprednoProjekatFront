@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../services/user.service";
-import {NavigationExtras, Router} from "@angular/router";
-import {User} from "../../models/UserResponse";
+import {Component, OnInit} from '@angular/core';
+import {RestService} from "../../services/rest.service";
+import {User} from "../../model";
 
 @Component({
   selector: 'app-all-users',
@@ -10,22 +9,27 @@ import {User} from "../../models/UserResponse";
 })
 export class AllUsersComponent implements OnInit {
 
-  users: User[] = []
-  canDelete: boolean = true;
-  constructor(private userService: UserService, private router: Router) { }
+  data: Array<User>;
+
+  constructor(private restService: RestService) {
+    this.data = [];
+  }
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe(users => {
-      this.users = users
-    })
-    this.canDelete = localStorage.getItem('canDelete')? true: false
+    this.getUsers();
   }
 
-  deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe(successfully =>{
-        alert("User with id "+ id + " has been successfully deleted!")
-        window.location.reload()
-    })
+  getUsers() {
+    this.restService.getUsers().subscribe(response => {
+      this.data = response;
+    });
   }
+
+  onDelete(id: number) {
+    this.restService.deleteUserById(id).subscribe(response => {
+      this.getUsers();
+    });
+  }
+
 
 }

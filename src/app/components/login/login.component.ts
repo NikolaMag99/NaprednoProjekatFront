@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../../services/login.service";
+import {ConfigService} from "../../services/config.service";
+import {RestService} from "../../services/rest.service";
 
 @Component({
   selector: 'app-login',
@@ -9,46 +10,24 @@ import {LoginService} from "../../services/login.service";
 })
 export class LoginComponent implements OnInit {
 
-  token: string | undefined
-  loginForm: FormGroup;
+  username: string;
+  password: string;
 
-  constructor(private loginService: LoginService, private formBuilder: FormBuilder) {
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
-    })
+
+  constructor(private configService: ConfigService, private restService: RestService) {
+    this.username = '';
+    this.password = '';
   }
 
   ngOnInit(): void {
   }
 
-  setNewToken(newToken: string): void {
-    localStorage.setItem("token", newToken)
-    this.token = newToken;
-
-    let token = localStorage.getItem('token');
-    if(token != null) {
-      let jwtData = token.split('.')[1]
-      let decodedJwtJsonData = window.atob(jwtData)
-      let decodedJwtData = JSON.parse(decodedJwtJsonData)
-
-      let isAdmin = decodedJwtData.admin
-
-      console.log('jwtData: ' + jwtData)
-      console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
-      console.log('decodedJwtData: ' + decodedJwtData)
-      console.log('Is admin: ' + isAdmin)
-    }
+  login() {
+    this.restService.login(
+      this.username, this.password
+    ).subscribe(response => {
+      this.configService.setToken(response.jwt);
+      this.configService.setId(response.id);
+    });
   }
-
-  loginUser() {
-    this.loginService.login(
-      this.loginForm.get('email')?.value,
-      this.loginForm.get('password')?.value,
-    ).subscribe((response) => {
-      this.setNewToken(response.jwt.toString())
-      this.loginForm.reset()
-    })
-  }
-
 }

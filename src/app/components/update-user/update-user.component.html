@@ -1,0 +1,158 @@
+<h3>Edit User</h3>
+
+<div>
+  <form (submit)="submitData()" class="mb-5">
+    <div class="form-group mb-2">
+      <label for="email">E-mail:</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        placeholder="E-mail"
+        [(ngModel)]="email"
+      />
+    </div>
+    <div class="form-group mb-2">
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Name"
+        [(ngModel)]="name"
+      />
+    </div>
+    <div class="form-group mb-2">
+      <label for="lastName">Last Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        name="lastName"
+        placeholder="Surname"
+        [(ngModel)]="lastName"
+      />
+    </div>
+    <br/>
+    <div class="form-check">
+      <input
+        [(ngModel)]="readPermission"
+        name="readPermission"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="readPermission"
+      />
+      <label class="form-check-label" for="readPermission"> Read permission </label>
+    </div>
+    <div class="form-check">
+      <input
+        [(ngModel)]="createPermission"
+        name="createPermission"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="createPermission"
+      />
+      <label class="form-check-label" for="createPermission"> Create permission </label>
+    </div>
+    <div class="form-check">
+      <input
+        [(ngModel)]="updatePermission"
+        name="updatePermission"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="updatePermission"
+      />
+      <label class="form-check-label" for="updatePermission"> Update permission </label>
+    </div>
+    <div class="form-check">
+      <input
+        [(ngModel)]="deletePermission"
+        name="deletePermission"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="deletePermission"
+      />
+      <label class="form-check-label" for="deletePermission"> Delete permission </label>
+    </div>
+    <div class="form-check">
+      <input
+        [(ngModel)]="canSearchMachines"
+        name="canSearchMachines"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="canSearchMachines"
+      />
+      <label class="form-check-label" for="canSearchMachines">Search Machine</label>
+    </div>
+    <div class="form-check">
+      <input
+        [(ngModel)]="canStartMachines"
+        name="canStartMachines"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="canStartMachines"
+      />
+      <label class="form-check-label" for="canStartMachines">Start Machine</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        [(ngModel)]="canStopMachines"
+        name="canStopMachines"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="canStopMachines"
+      />
+      <label class="form-check-label" for="canStopMachines">Stop Machine</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        [(ngModel)]="canRestartMachines"
+        name="canRestartMachines"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="canRestartMachines"
+      />
+      <label class="form-check-label" for="canRestartMachines">Restart Machine</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        [(ngModel)]="canCreateMachines"
+        name="canCreateMachines"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="canCreateMachines"
+      />
+      <label class="form-check-label" for="canCreateMachines">Create Machine</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        [(ngModel)]="canDestroyMachines"
+        name="canDestroyMachines"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="canDestroyMachines"
+      />
+      <label class="form-check-label" for="canDestroyMachines">Destoy Machine</label>
+    </div>
+
+
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

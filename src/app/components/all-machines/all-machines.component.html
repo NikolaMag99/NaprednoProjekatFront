@@ -1,0 +1,27 @@
+<div *ngIf="data.length > 0">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Active</th>
+      <th scope="col">Status</th>
+      <th scope="col">Date created</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let machines of data; index as i">
+      <th scope="row">{{ machines.id }}</th>
+<!--      <td>-->
+<!--        <a [routerLink]="['/machines', machines.id]">{{user.email}} </a>-->
+<!--      </td>-->
+      <td>{{ machines.name }}</td>
+      <td> {{ machines.active}} </td>
+      <td> {{ machines.status}} </td>
+      <td> {{ machines.dateFrom}} </td>
+<!--      <td> <button type="button" (click)="onDelete(machines.id)" class="btn btn-danger">Delete</button> </td>-->
+
+    </tr>
+    </tbody>
+  </table>
+</div>

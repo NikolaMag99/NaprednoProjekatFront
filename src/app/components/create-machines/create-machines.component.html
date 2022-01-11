@@ -1,0 +1,42 @@
+<h3>Add Machine</h3>
+
+<div>
+  <form (submit)="submitData()" class="mb-5">
+    <div class="form-group mb-2">
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Name"
+        [(ngModel)]="name"
+      />
+    </div>
+    <!--    <div class="form-group mb-2">-->
+    <!--      <label for="lastName">Status:</label>-->
+    <!--      <input-->
+    <!--        type="text"-->
+    <!--        class="form-control"-->
+    <!--        id="lastName"-->
+    <!--        name="lastName"-->
+    <!--        placeholder="Last name"-->
+    <!--        [(ngModel)]="active"-->
+    <!--      />-->
+    <!--    </div>-->
+    <div class="form-check">
+      <input
+        [(ngModel)]="active"
+        name="active"
+        class="form-check-input"
+        type="checkbox"
+        value=""
+        id="active"
+      />
+      <label class="form-check-label" for="active">Activate</label>
+    </div>
+
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
