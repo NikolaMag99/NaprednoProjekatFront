@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RestService} from "../../services/rest.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-machines',
@@ -12,7 +13,7 @@ export class CreateMachinesComponent implements OnInit {
   name: string;
 
 
-  constructor(private restService: RestService) {
+  constructor(private restService: RestService, private router: Router) {
     this.active = true;
     this.name = "";
   }
@@ -26,5 +27,7 @@ export class CreateMachinesComponent implements OnInit {
     ).subscribe(result => {
       console.log(result);
     });
+    this.router.navigate(["/all-machines"])
+    window.location.href = 'http://localhost:4200/all-machines';
   }
 }

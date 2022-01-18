@@ -7,6 +7,7 @@ import {UpdateUserComponent} from "./components/update-user/update-user.componen
 import {SaveUserComponent} from "./components/save-user/save-user.component";
 import {AllMachinesComponent} from "./components/all-machines/all-machines.component";
 import {CreateMachinesComponent} from "./components/create-machines/create-machines.component";
+import {ErrorsComponent} from "./components/errors/errors.component";
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
     path: "add-machine",
     component: CreateMachinesComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: "all-errors",
+    component: ErrorsComponent,
   },
 ];
 

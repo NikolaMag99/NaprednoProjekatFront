@@ -31,6 +31,7 @@ export interface Machines {
   name: string;
   status: string;
   dateFrom: Date;
+  busy: boolean;
 }
 
 export interface ErrorMessage {
@@ -38,17 +39,6 @@ export interface ErrorMessage {
   message: string;
   operation: string;
   date: Date;
-  machines: Machines;
+  machine_id: Machines;
 }
 
-// "id": 1,
-// "username": "user1",
-// "name": "Student",
-// "surname": "Studentic",
-// "permissions": {
-//     "id": 1,
-//     "canCreateUsers": true,
-//     "canReadUsers": true,
-//     "canUpdateUsers": true,
-//     "canDeleteUsers": true
-// }

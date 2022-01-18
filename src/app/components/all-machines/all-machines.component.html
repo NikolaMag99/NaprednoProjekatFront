@@ -6,21 +6,51 @@
       <th scope="col">Name</th>
       <th scope="col">Active</th>
       <th scope="col">Status</th>
+      <th scope="col">Busy</th>
       <th scope="col">Date created</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let machines of data; index as i">
       <th scope="row">{{ machines.id }}</th>
-<!--      <td>-->
-<!--        <a [routerLink]="['/machines', machines.id]">{{user.email}} </a>-->
-<!--      </td>-->
       <td>{{ machines.name }}</td>
       <td> {{ machines.active}} </td>
       <td> {{ machines.status}} </td>
+      <td> {{ machines.busy}} </td>
       <td> {{ machines.dateFrom}} </td>
-<!--      <td> <button type="button" (click)="onDelete(machines.id)" class="btn btn-danger">Delete</button> </td>-->
-
+      <td>
+        <button class="btn btn-primary"
+                (click)="onAction(machines.id, START)"
+                type="button"
+                *ngIf="machines.status === 'STOPPED'; else stop"
+                [disabled]="machines.busy">
+          Start
+        </button>
+        <ng-template #stop>
+          <button class="btn btn-primary"
+                  (click)="onAction(machines.id, STOP)"
+                  type="button"
+                  [disabled]=" machines.busy">
+            Stop
+          </button>
+        </ng-template>
+      </td>
+      <td>
+        <button class="btn btn-warning"
+                (click)="onAction(machines.id, RESTART)"
+                type="button"
+                [disabled]="machines.status !== 'RUNNING' || machines.busy">
+          Restart
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-danger"
+                (click)="onDelete(machines.id)"
+                type="button"
+                [disabled]=" machines.busy">
+          Deactivate
+        </button>
+      </td>
     </tr>
     </tbody>
   </table>

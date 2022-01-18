@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
 import {ConfigService} from './config.service';
-import {LoginResponse, Machines, User} from 'src/app/model';
-import {Observable} from 'rxjs';
+import {ErrorMessage, LoginResponse, Machines, User} from 'src/app/model';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,16 @@ export class RestService {
         headers: {'Authorization': `Bearer ${token}`}
       }
     );
+  }
+
+  findAllErrorMessages(): Observable<Array<ErrorMessage>>  {
+    let token = this.configService.getToken();
+    return this.httpClient.get<ErrorMessage[]>(
+      `${this.apiUrl}/api/machines/allErrors`,
+      {
+      headers: {'Authorization': `Bearer ${token}`}
+  }
+);
   }
 
   getMachines(id: number): Observable<Array<Machines>> {
@@ -99,6 +110,25 @@ export class RestService {
       }
     )
   }
+
+  startMachine(id: number): Observable<Machines> {
+    let token = this.configService.getToken();
+    return this.httpClient.put<Machines>(
+      `${this.apiUrl}/api/machines/start`,
+      {}, {
+        params: {machineId: id}, headers: {'Authorization': `Bearer ${token}`}
+      }
+    )
+  }
+
+  stopMachine(id: number) {
+    return this.httpClient.put<Machines>(`${this.apiUrl}/api/machines/stop`, {}, {params: {machineId: id}}).pipe(catchError(this.handleError));
+  }
+
+  restartMachine(id: number) {
+    return this.httpClient.put<Machines>(`${this.apiUrl}/api/machines/restart`, {}, {params: {machineId: id}}).pipe(catchError(this.handleError));
+  }
+
 
   createUser(
     email: string,
@@ -178,5 +208,19 @@ export class RestService {
         headers: {'Authorization': `Bearer ${token}`}
       }
     )
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (errorRes.status === 400) {
+      errorMessage = errorRes.error ? errorRes.error : 'Bad Request!';
+    } else if (errorRes.status === 401) {
+      errorMessage = 'Bad Credentials!';
+    } else if (errorRes.status === 403 || errorRes.status === 0) {
+      errorMessage = errorRes.error ? errorRes.error : 'Unauthorized access!';
+    } else if (errorRes.status === 404) {
+      errorMessage = 'Not Found!';
+    }
+    return throwError(errorMessage);
   }
 }

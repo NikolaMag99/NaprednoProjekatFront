@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConfigService} from "../../services/config.service";
 import {RestService} from "../../services/rest.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   password: string;
 
 
-  constructor(private configService: ConfigService, private restService: RestService) {
+  constructor(private configService: ConfigService, private restService: RestService, private router: Router) {
     this.username = '';
     this.password = '';
   }
@@ -29,5 +30,6 @@ export class LoginComponent implements OnInit {
       this.configService.setToken(response.jwt);
       this.configService.setId(response.id);
     });
+    this.router.navigate(["/all-machines"])
   }
 }
