@@ -113,21 +113,35 @@ export class RestService {
 
   startMachine(id: number): Observable<Machines> {
     let token = this.configService.getToken();
-    return this.httpClient.put<Machines>(
-      `${this.apiUrl}/api/machines/start`,
+    return this.httpClient.post<Machines>(
+      `${this.apiUrl}/api/machines/start?machineId=${id}`,
       {}, {
-        params: {machineId: id}, headers: {'Authorization': `Bearer ${token}`}
+         headers: {'Authorization': `Bearer ${token}`, 'Access-Control-Allow-Origin': '*'}
       }
     )
   }
 
-  stopMachine(id: number) {
-    return this.httpClient.put<Machines>(`${this.apiUrl}/api/machines/stop`, {}, {params: {machineId: id}}).pipe(catchError(this.handleError));
+  stopMachine(id: number): Observable<Machines> {
+    let token = this.configService.getToken();
+    return this.httpClient.post<Machines>(
+      `${this.apiUrl}/api/machines/stop?machineId=` + id,
+      {}, {
+         headers: {'Authorization': `Bearer ${token}`}
+      }
+    )
   }
 
-  restartMachine(id: number) {
-    return this.httpClient.put<Machines>(`${this.apiUrl}/api/machines/restart`, {}, {params: {machineId: id}}).pipe(catchError(this.handleError));
+  restartMachine(id: number): Observable<Machines> {
+    let token = this.configService.getToken();
+    return this.httpClient.post<Machines>(
+      `${this.apiUrl}/api/machines/restart?machineId=` + id,
+      {}, {
+        headers: {'Authorization': `Bearer ${token}`}
+      }
+    )
   }
+
+
 
 
   createUser(

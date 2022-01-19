@@ -16,6 +16,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { AllMachinesComponent } from './components/all-machines/all-machines.component';
 import { CreateMachinesComponent } from './components/create-machines/create-machines.component';
 import { ErrorsComponent } from './components/errors/errors.component';
+import { SearchComponent } from './components/all-machines/search/search.component';
 
 
 
@@ -28,7 +29,8 @@ import { ErrorsComponent } from './components/errors/errors.component';
     UpdateUserComponent,
     AllMachinesComponent,
     CreateMachinesComponent,
-    ErrorsComponent
+    ErrorsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

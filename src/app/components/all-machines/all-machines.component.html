@@ -20,24 +20,25 @@
       <td> {{ machines.dateFrom}} </td>
       <td>
         <button class="btn btn-primary"
-                (click)="onAction(machines.id, START)"
+                (click)="startMachine(machines.id)"
                 type="button"
-                *ngIf="machines.status === 'STOPPED'; else stop"
-                [disabled]="machines.busy">
+                [disabled]="machines.status !== 'STOPPED' || machines.busy">
           Start
         </button>
-        <ng-template #stop>
+      </td>
+      <td>
           <button class="btn btn-primary"
-                  (click)="onAction(machines.id, STOP)"
+                  (click)="stopMachine(machines.id)"
                   type="button"
-                  [disabled]=" machines.busy">
+                  [disabled]=" machines.status !== 'RUNNING'  || machines.busy">
+
             Stop
           </button>
-        </ng-template>
+
       </td>
       <td>
         <button class="btn btn-warning"
-                (click)="onAction(machines.id, RESTART)"
+                (click)="restartMachine(machines.id)"
                 type="button"
                 [disabled]="machines.status !== 'RUNNING' || machines.busy">
           Restart

@@ -20,24 +20,23 @@ export class AllMachinesComponent implements OnInit {
   readonly RESTART = 'RESTART';
   actions!: Observable<Machines>;
   error = null;
+  message: String = ''
 
 
   constructor(private restService: RestService, private router: Router) {
   }
 
 
+
   ngOnInit(): void {
-    this.restService.getMachines(Number(localStorage.getItem('userId'))).subscribe(response => {
-      this.data = response;
-    })
-    // this.getMachines(Number(localStorage.getItem('userId')));
+    this.getMachines(Number(localStorage.getItem('userId')));
   }
 
-  // getMachines(id: number) {
-  //   this.restService.getMachines(id).subscribe(response => {
-  //     this.data = response;
-  //   })
-  // }
+  getMachines(id: number) {
+    this.restService.getMachines(id).subscribe(response => {
+      this.data = response;
+    })
+  }
 
   getAllMachines() {
     this.restService.getAllMachines().subscribe(response => {
@@ -52,18 +51,44 @@ export class AllMachinesComponent implements OnInit {
     });
   }
 
-  onAction(id: number, action: string) {
-    switch (action) {
-      case this.START:
-        this.actions = this.restService.startMachine(id);
-        break;
-      case this.STOP:
-        this.actions = this.restService.stopMachine(id);
-        break;
-      case this.RESTART:
-        this.actions = this.restService.restartMachine(id);
-        break;
+
+  startMachine(id: number){
+      this.restService.startMachine(id).subscribe((response) => {
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 100);
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 12000);
+      },(error)=>{
+        this.message = 'This machine is currently being used'
+      })
     }
+
+  stopMachine(id: number){
+    this.restService.stopMachine(id).subscribe((response) => {
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 100);
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 12000);
+    },(error)=>{
+      this.message = 'This machine is currently being used'
+    })
   }
+
+  restartMachine(id: number){
+      this.restService.restartMachine(id).subscribe((response) => {
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 100);
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 12000);
+      },(error)=>{
+        this.message = 'No permission'
+      })
+    }
 
 }

@@ -31,5 +31,6 @@ export class LoginComponent implements OnInit {
       this.configService.setId(response.id);
     });
     this.router.navigate(["/all-machines"])
+    window.location.href = 'http://localhost:4200/all-machines';
   }
 }

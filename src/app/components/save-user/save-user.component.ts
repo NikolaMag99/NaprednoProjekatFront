@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RestService} from "../../services/rest.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-save-user',
@@ -24,7 +25,7 @@ export class SaveUserComponent implements OnInit {
   canCreateMachines: boolean;
   canDestroyMachines: boolean;
 
-  constructor(private restService: RestService) {
+  constructor(private restService: RestService, private router: Router) {
     this.email = "";
     this.name = "";
     this.lastName = "";
@@ -58,6 +59,8 @@ export class SaveUserComponent implements OnInit {
     ).subscribe(result => {
       console.log(result);
     });
+    this.router.navigate(["/all-machines"])
+    window.location.href = 'http://localhost:4200/all-users';
   }
 }
 
