@@ -56,3 +56,62 @@
     </tbody>
   </table>
 </div>
+
+  <div class="example-container mat-elevation-z8">
+    <form [formGroup]="searchMachineForm" (submit)="searchMachine()" class="mb-5">
+      <div class="form-group">
+        <label for="name">Search machine by name</label>
+        <input type="name" class="form-control" id="name" placeholder="Enter machine name"
+               [formControlName]="'name'">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <h6>Search machine by date created</h6>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+        <input [(ngModel)]="startDate" matStartDate formControlName="start" placeholder="Start date">
+        <input [(ngModel)]="endDate" matEndDate formControlName="end" placeholder="End date">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+<br><br>
+    <h6>Search machine by status</h6>
+    <section class="example-section">
+      <div class="form-check">
+        <input
+          [(ngModel)]="stopped"
+          [checked]="false"
+          name="stopped"
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="stopped"
+        />
+        <label class="form-check-label" for="stopped">Stopped</label>
+      </div>
+      <div class="form-check">
+        <input
+          [(ngModel)]="running"
+          [checked]="false"
+          name="running"
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="running"
+        />
+        <label class="form-check-label" for="running">Running</label>
+      </div>
+<!--      <label>-->
+<!--      <input type="checkbox"  [(ngModel)]="stopped" [checked]="false" class="example-margin">Stopped-->
+<!--      </label>-->
+<!--      <br>-->
+<!--      <label>-->
+<!--        <input type="checkbox"  [(ngModel)]="running" [checked]="false" class="example-margin">Running-->
+<!--      </label>-->
+<!--      <mat-checkbox [(ngModel)]="running" class="example-margin">running</mat-checkbox>-->
+    </section>
+
+
+</div>

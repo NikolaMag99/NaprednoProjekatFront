@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {environment} from 'src/environments/environment';
 import {ConfigService} from './config.service';
 import {ErrorMessage, LoginResponse, Machines, User} from 'src/app/model';
@@ -108,6 +108,37 @@ export class RestService {
       {
         headers: {'Authorization': `Bearer ${token}`}
       }
+    )
+  }
+
+  searchMachine(dateFrom: Date | undefined, dateTo: Date | undefined, name?: string, status?: string[] | undefined): Observable<Array<Machines>> {
+    let token = this.configService.getToken();
+    let params = new HttpParams();
+
+    if(dateFrom != undefined) {
+      // @ts-ignore
+      params = params.append('dateFrom', dateFrom.toISOString().slice(0,10));
+    }
+
+    if(dateTo != undefined){
+      // @ts-ignore
+      params = params.append('dateTo', dateTo.toISOString().slice(0,10));
+    }
+    // @ts-ignore
+    params = params.append('name', name);
+
+    // @ts-ignore
+    if(status != '') {
+      // @ts-ignore
+      params = params.append('status', status);
+    }
+    console.log(dateTo)
+    console.log(name)
+    return this.httpClient.get<Machines[]>(
+      `${this.apiUrl}/api/machines/search`,
+      {
+        headers: {Authorization: `Bearer ${token}`}, params: params
+      },
     )
   }
 

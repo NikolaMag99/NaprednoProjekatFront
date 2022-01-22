@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
     ).subscribe(response => {
       this.configService.setToken(response.jwt);
       this.configService.setId(response.id);
+    }, error => {
+      console.log("LUDIIIIIIIIIIIII")
     });
     this.router.navigate(["/all-machines"])
     window.location.href = 'http://localhost:4200/all-machines';

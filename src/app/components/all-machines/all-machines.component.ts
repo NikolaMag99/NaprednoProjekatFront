@@ -4,6 +4,7 @@ import {RestService} from "../../services/rest.service";
 import {take, tap} from "rxjs/operators";
 import {Observable, Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
@@ -14,16 +15,26 @@ import {Router} from "@angular/router";
 export class AllMachinesComponent implements OnInit {
 
   data: Machines[] = [];
-  permissions: { [key: string]: boolean } = {};
-  readonly START = 'START';
-  readonly STOP = 'STOP';
-  readonly RESTART = 'RESTART';
-  actions!: Observable<Machines>;
-  error = null;
   message: String = ''
+  status: string[] = [];
 
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
 
-  constructor(private restService: RestService, private router: Router) {
+  searchMachineForm: FormGroup;
+  endDate: Date | undefined
+  startDate: Date | undefined
+  stopped: boolean
+  running: boolean
+
+  constructor(private restService: RestService, private router: Router, private formBuilder: FormBuilder) {
+    this.stopped = false
+    this.running = false
+    this.searchMachineForm = this.formBuilder.group({
+      name: ['', Validators.minLength(4)],
+    })
   }
 
 
@@ -44,6 +55,24 @@ export class AllMachinesComponent implements OnInit {
     });
   }
 
+  searchMachine() {
+    if(this.stopped) {
+      this.status.push("STOPPED")
+    }
+    if(this.running) {
+      this.status.push("RUNNING")
+    }
+    this.restService.searchMachine(
+      this.startDate,
+      this.endDate,
+      this.searchMachineForm.get('name')?.value,
+      this.status
+    ).subscribe((response) => {
+      this.data = response
+    }, error => {
+      this.message = ''
+    })
+  }
 
   onDelete(id: number) {
     this.restService.deleteMachine(id).subscribe(response => {
@@ -52,20 +81,20 @@ export class AllMachinesComponent implements OnInit {
   }
 
 
-  startMachine(id: number){
-      this.restService.startMachine(id).subscribe((response) => {
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 100);
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 12000);
-      },(error)=>{
-        this.message = 'This machine is currently being used'
-      })
-    }
+  startMachine(id: number) {
+    this.restService.startMachine(id).subscribe((response) => {
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 100);
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 12000);
+    }, (error) => {
+      this.message = 'No permission'
+    })
+  }
 
-  stopMachine(id: number){
+  stopMachine(id: number) {
     this.restService.stopMachine(id).subscribe((response) => {
       setTimeout(() => {
         this.ngOnInit()
@@ -73,22 +102,22 @@ export class AllMachinesComponent implements OnInit {
       setTimeout(() => {
         this.ngOnInit()
       }, 12000);
-    },(error)=>{
-      this.message = 'This machine is currently being used'
+    }, (error) => {
+      this.message = 'No permission'
     })
   }
 
-  restartMachine(id: number){
-      this.restService.restartMachine(id).subscribe((response) => {
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 100);
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 12000);
-      },(error)=>{
-        this.message = 'No permission'
-      })
-    }
+  restartMachine(id: number) {
+    this.restService.restartMachine(id).subscribe((response) => {
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 100);
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 12000);
+    }, (error) => {
+      this.message = 'No permission'
+    })
+  }
 
 }
