@@ -32,7 +32,9 @@ export class LoginComponent implements OnInit {
     }, error => {
       console.log("LUDIIIIIIIIIIIII")
     });
+    console.log( this.username)
+    console.log( this.password)
     this.router.navigate(["/all-machines"])
-    window.location.href = 'http://localhost:4200/all-machines';
+    // window.location.href = 'http://localhost:4200/all-machines';
   }
 }

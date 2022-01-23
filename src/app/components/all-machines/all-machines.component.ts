@@ -17,6 +17,7 @@ export class AllMachinesComponent implements OnInit {
   data: Machines[] = [];
   message: String = ''
   status: string[] = [];
+  error: string | undefined;
 
   range = new FormGroup({
     start: new FormControl(),
@@ -77,6 +78,13 @@ export class AllMachinesComponent implements OnInit {
   onDelete(id: number) {
     this.restService.deleteMachine(id).subscribe(response => {
       this.ngOnInit()
+    }, error => {
+      setTimeout(() => {
+        this.error = 'You cant delete Machine cus is RUNNING'
+      }, 100);
+      setTimeout(() => {
+        this.error = ''
+      }, 2500);
     });
   }
 
