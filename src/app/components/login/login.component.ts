@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     });
     console.log( this.username)
     console.log( this.password)
-    this.router.navigate(["/all-machines"])
+    // this.router.navigate(["/all-machines"])
     // window.location.href = 'http://localhost:4200/all-machines';
   }
 }
